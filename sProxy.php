@@ -87,16 +87,17 @@ class Anonymouse
      * @param string | str
      */
     public function Test_Proxy($Site) {
-
-    	$TestProxy = $this->Curl->post($Site."https://api.ipify.org/");
-    	if($TestProxy){
-    		return $TestProxy;
+    	$Validate = $this->validate_ip($Site);
+    	if($Validate == true){
+    		echo ":) yes true";
+    	}else{
+    		echo ":( not true";
     	}
     }
 
 }//class
 $go = new Anonymouse();
 
-$yo = $go->Add_sProxy('http://www.get.info/get.php?u=');
+$yo = $go->Test_Proxy('http://www.get.info/get.php?u=');
 echo $yo;
 ?>
