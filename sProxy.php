@@ -11,6 +11,7 @@ class Anonymouse
 		# code...
 		$this->Curl = new Curl();
 	}
+
     /**
      */
 	public function validate_ip($Site) {
@@ -39,8 +40,8 @@ class Anonymouse
      * @param string | str
      */
     public function Add_sProxy($Site) {
-    	$TestProxy = $this->Curl->post($Site."https://api.ipify.org/");
-    	if($TestProxy){
+    	$Validate = $this->validate_ip($Site);
+    	if($Validate == true){
 	    	$Add_ProxyList = @fopen("ProxyList.txt", "a+");
 	    	@fwrite($Add_ProxyList, "$Site\n");
 	    	@fclose($Add_ProxyList);
@@ -53,8 +54,8 @@ class Anonymouse
      * @param string | str
      */
     public function Delete_sProxy($Site) {
-    	$TestProxy = $this->Curl->post($Site."https://api.ipify.org/");
-    	if(!$TestProxy){
+    	$Validate = $this->validate_ip($Site);
+    	if($Validate == false){
 	    	$Data_ProxyList = file("ProxyList.txt");
 	    	$out = array();
 		    foreach($Data_ProxyList as $line) {
@@ -81,11 +82,21 @@ class Anonymouse
         return $this->Request(trim($Proxy));
     }
 
+    /**
+     * @param integer| Random
+     * @param string | str
+     */
+    public function Test_Proxy($Site) {
+
+    	$TestProxy = $this->Curl->post($Site."https://api.ipify.org/");
+    	if($TestProxy){
+    		return $TestProxy;
+    	}
+    }
 
 }//class
-
 $go = new Anonymouse();
 
-$yo = $go->Random_Proxy();
+$yo = $go->Add_sProxy('http://www.get.info/get.php?u=');
 echo $yo;
 ?>
