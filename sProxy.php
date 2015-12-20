@@ -13,6 +13,18 @@ class Anonymouse
 	}
     /**
      */
+	public function validate_ip($Site) {
+	    // generate ipv4 network address
+	    $ip = $this->Curl->post($Site."https://api.ipify.org/");
+	    $ip = ip2long($ip);
+	    // if the ip is set and not equivalent to 255.255.255.255
+	    if ($ip == false) {
+			return false;
+	    }
+	    return true;
+	}
+    /**
+     */
     public function Request($Proxy){
         $Response = $this->Curl->post($Proxy."https://api.ipify.org/");
         if(!$Response){
